@@ -1,6 +1,11 @@
 package org.eclipse.ee4j.tests;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PathUtils
 {
@@ -56,5 +61,18 @@ public class PathUtils
             }
         }
         return buf.toString();
+    }
+
+    public static Path ensureDirExists(Path dir) throws IOException
+    {
+        if (Files.exists(dir))
+        {
+            assertTrue(Files.isDirectory(dir), "Not a directory: " + dir);
+        }
+        else
+        {
+            Files.createDirectories(dir);
+        }
+        return dir;
     }
 }
