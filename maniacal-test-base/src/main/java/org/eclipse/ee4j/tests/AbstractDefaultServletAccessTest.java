@@ -26,11 +26,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class AbstractDefaultServletAccessTest
+public abstract class AbstractDefaultServletAccessTest extends AbstractWebappTest
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDefaultServletAccessTest.class);
-
-    public abstract URI getWebappURI();
 
     public static Stream<Arguments> metaInfResourceCases()
     {
@@ -58,12 +56,12 @@ public abstract class AbstractDefaultServletAccessTest
         // uri-reserved characters.
         List<String> dirNames = new ArrayList<>();
         dirNames.add("uri-reserved/");
-//        dirNames.add("uri-reserved/semi;colon/");
-//        dirNames.add("uri-reserved/semi%3bcolon/");
-//        dirNames.add("uri-reserved/question?mark/");
-//        dirNames.add("uri-reserved/question%3fmark/");
-//        dirNames.add("uri-reserved/hash#mark/");
-//        dirNames.add("uri-reserved/hash%23mark/");
+        dirNames.add("uri-reserved/semi;colon/");
+        dirNames.add("uri-reserved/semi%3bcolon/");
+        dirNames.add("uri-reserved/question?mark/");
+        dirNames.add("uri-reserved/question%3fmark/");
+        dirNames.add("uri-reserved/hash#mark/");
+        dirNames.add("uri-reserved/hash%23mark/");
 
         for (String dirPrefix : dirNames)
         {

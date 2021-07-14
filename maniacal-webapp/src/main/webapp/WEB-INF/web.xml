@@ -6,4 +6,14 @@
   <display-name>Test of Maniacal Encodings in the Servlet spec</display-name>
   <default-context-path>/maniacal</default-context-path>
 
+  <servlet>
+    <servlet-name>RedirectToResource</servlet-name>
+    <servlet-class>org.eclipse.ee4j.tests.RedirectToDefaultResourceServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>RedirectToResource</servlet-name>
+    <url-pattern>/redir-resource/*</url-pattern>
+  </servlet-mapping>
+
 </web-app>
