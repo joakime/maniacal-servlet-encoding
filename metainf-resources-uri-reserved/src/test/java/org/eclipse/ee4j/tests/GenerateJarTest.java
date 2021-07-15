@@ -66,7 +66,7 @@ public class GenerateJarTest
         touchFiles(testcases, outputDir, "are_we_not_robots?.txt", "reserved-question-mark-end");
         touchFiles(testcases, outputDir, "?question.txt", "reserved-question-mark-start");
         touchFiles(testcases, outputDir, "deck_#4_of_15.txt", "reserved-hash-deck4");
-        touchFiles(testcases, outputDir, "#hashcode.txt", "reserved-hash-stgart");
+        touchFiles(testcases, outputDir, "#hashcode.txt", "reserved-hash-start");
         touchFiles(testcases, outputDir, "[brackets].txt", "reserved-brackets-start");
         touchFiles(testcases, outputDir, "byte[0].txt", "reserved-brackets-byte-array-empty");
 

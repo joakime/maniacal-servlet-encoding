@@ -105,9 +105,9 @@ public class RedirectToDefaultResourceServlet extends HttpServlet
             // redirectArguments.add(Arguments.of(dirPrefix + "deck_#4_of_15.txt", "reserved-hash-deck4-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "deck_%234_of_15.txt", "reserved-hash-deck4-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "deck_%25234_of_15.txt", "reserved-hash-deck4-encoded"));
-            redirectArguments.add(Arguments.of(dirPrefix + "#hashcode.txt", "reserved-hash-stgart-raw"));
-            redirectArguments.add(Arguments.of(dirPrefix + "%23hashcode.txt", "reserved-hash-stgart-raw"));
-            redirectArguments.add(Arguments.of(dirPrefix + "%2523hashcode.txt", "reserved-hash-stgart-encoded"));
+            redirectArguments.add(Arguments.of(dirPrefix + "#hashcode.txt", "reserved-hash-start-raw"));
+            redirectArguments.add(Arguments.of(dirPrefix + "%23hashcode.txt", "reserved-hash-start-raw"));
+            redirectArguments.add(Arguments.of(dirPrefix + "%2523hashcode.txt", "reserved-hash-start-encoded"));
             // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Illegal character in path at index 45: http://127.0.1.1:46805/maniacal/uri-reserved/[brackets].txt
             // redirectArguments.add(Arguments.of(dirPrefix + "[brackets].txt", "reserved-brackets-start-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%5Bbrackets%5D.txt", "reserved-brackets-start-raw"));

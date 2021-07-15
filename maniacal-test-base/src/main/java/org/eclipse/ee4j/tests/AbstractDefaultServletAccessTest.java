@@ -96,9 +96,9 @@ public abstract class AbstractDefaultServletAccessTest extends AbstractWebappTes
             cases.add(Arguments.of(dirPrefix + "deck_#4_of_15.txt", "reserved-hash-deck4-raw"));
             cases.add(Arguments.of(dirPrefix + "deck_%234_of_15.txt", "reserved-hash-deck4-raw"));
             cases.add(Arguments.of(dirPrefix + "deck_%25234_of_15.txt", "reserved-hash-deck4-encoded"));
-            cases.add(Arguments.of(dirPrefix + "#hashcode.txt", "reserved-hash-stgart-raw"));
-            cases.add(Arguments.of(dirPrefix + "%23hashcode.txt", "reserved-hash-stgart-raw"));
-            cases.add(Arguments.of(dirPrefix + "%2523hashcode.txt", "reserved-hash-stgart-encoded"));
+            cases.add(Arguments.of(dirPrefix + "#hashcode.txt", "reserved-hash-start-raw"));
+            cases.add(Arguments.of(dirPrefix + "%23hashcode.txt", "reserved-hash-start-raw"));
+            cases.add(Arguments.of(dirPrefix + "%2523hashcode.txt", "reserved-hash-start-encoded"));
             cases.add(Arguments.of(dirPrefix + "[brackets].txt", "reserved-brackets-start-raw"));
             cases.add(Arguments.of(dirPrefix + "%5Bbrackets%5D.txt", "reserved-brackets-start-raw"));
             cases.add(Arguments.of(dirPrefix + "%255Bbrackets%255D.txt", "reserved-brackets-start-encoded"));
