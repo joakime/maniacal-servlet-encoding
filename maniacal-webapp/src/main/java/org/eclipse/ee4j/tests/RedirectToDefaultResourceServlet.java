@@ -60,11 +60,12 @@ public class RedirectToDefaultResourceServlet extends HttpServlet
         // uri-reserved characters.
         List<String> dirNames = new ArrayList<>();
         dirNames.add("uri-reserved/");
-        dirNames.add("uri-reserved/semi;colon/");
+        dirNames.add("uri-reserved/semi;colon/"); // TODO: This results in 100% 404 failure on Jetty
         dirNames.add("uri-reserved/semi%3bcolon/");
-        dirNames.add("uri-reserved/question?mark/");
+        dirNames.add("uri-reserved/question?mark/");  // TODO: This results in 100% 404 failure on Jetty
         dirNames.add("uri-reserved/question%3fmark/");
-        dirNames.add("uri-reserved/hash#mark/");
+        // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Illegal character in fragment at index 55: http://127.0.1.1:36131/maniacal/uri-reserved/hash#mark/#hashcode.txt
+        // dirNames.add("uri-reserved/hash#mark/");
         dirNames.add("uri-reserved/hash%23mark/");
 
         for (String dirPrefix : dirNames)
@@ -73,13 +74,16 @@ public class RedirectToDefaultResourceServlet extends HttpServlet
             redirectArguments.add(Arguments.of(dirPrefix + "exists.txt", "dir exists: uri-reserved"));
 
             // Access of specific content
-            redirectArguments.add(Arguments.of(dirPrefix + "this_is_100%_valid.txt", "reserved-percent-100-raw"));
+            // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Malformed escape pair at index 56: http://127.0.1.1:46805/maniacal/uri-reserved/this_is_100%_valid.txt
+            // redirectArguments.add(Arguments.of(dirPrefix + "this_is_100%_valid.txt", "reserved-percent-100-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "this_is_100%25_valid.txt", "reserved-percent-100-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "this_is_100%2525_valid.txt", "reserved-percent-100-encoded"));
-            redirectArguments.add(Arguments.of(dirPrefix + "vote-results-50%-of-precincts.txt", "reserved-percent-50-raw"));
+            // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Malformed escape pair at index 60: http://127.0.1.1:46805/maniacal/uri-reserved/vote-results-50%-of-precincts.txt
+            // redirectArguments.add(Arguments.of(dirPrefix + "vote-results-50%-of-precincts.txt", "reserved-percent-50-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "vote-results-50%25-of-precincts.txt", "reserved-percent-50-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "vote-results-50%2525-of-precincts.txt", "reserved-percent-50-encoded"));
-            redirectArguments.add(Arguments.of(dirPrefix + "%_played.txt", "reserved-percent-played-raw"));
+            // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Malformed escape pair at index 45: http://127.0.1.1:46805/maniacal/uri-reserved/%_played.txt
+            // redirectArguments.add(Arguments.of(dirPrefix + "%_played.txt", "reserved-percent-played-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%25_played.txt", "reserved-percent-played-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%2525_played.txt", "reserved-percent-played-encoded"));
             redirectArguments.add(Arguments.of(dirPrefix + "there_are_two_choices:foo_or_bar.txt", "reserved-colon-choices-raw"));
@@ -97,16 +101,19 @@ public class RedirectToDefaultResourceServlet extends HttpServlet
             redirectArguments.add(Arguments.of(dirPrefix + "?question.txt", "reserved-question-mark-start-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%3Fquestion.txt", "reserved-question-mark-start-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%253Fquestion.txt", "reserved-question-mark-start-encoded"));
-            redirectArguments.add(Arguments.of(dirPrefix + "deck_#4_of_15.txt", "reserved-hash-deck4-raw"));
+            // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Illegal character in fragment at index 60: http://127.0.1.1:46059/maniacal/uri-reserved/hash#mark/deck_#4_of_15.txt
+            // redirectArguments.add(Arguments.of(dirPrefix + "deck_#4_of_15.txt", "reserved-hash-deck4-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "deck_%234_of_15.txt", "reserved-hash-deck4-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "deck_%25234_of_15.txt", "reserved-hash-deck4-encoded"));
             redirectArguments.add(Arguments.of(dirPrefix + "#hashcode.txt", "reserved-hash-stgart-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%23hashcode.txt", "reserved-hash-stgart-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%2523hashcode.txt", "reserved-hash-stgart-encoded"));
-            redirectArguments.add(Arguments.of(dirPrefix + "[brackets].txt", "reserved-brackets-start-raw"));
+            // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Illegal character in path at index 45: http://127.0.1.1:46805/maniacal/uri-reserved/[brackets].txt
+            // redirectArguments.add(Arguments.of(dirPrefix + "[brackets].txt", "reserved-brackets-start-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%5Bbrackets%5D.txt", "reserved-brackets-start-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%255Bbrackets%255D.txt", "reserved-brackets-start-encoded"));
-            redirectArguments.add(Arguments.of(dirPrefix + "byte[0].txt", "reserved-brackets-byte-array-empty-raw"));
+            // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Illegal character in path at index 49: http://127.0.1.1:46805/maniacal/uri-reserved/byte[0].txt
+            // redirectArguments.add(Arguments.of(dirPrefix + "byte[0].txt", "reserved-brackets-byte-array-empty-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "byte%5B0%5D.txt", "reserved-brackets-byte-array-empty-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "byte%255B0%255D.txt", "reserved-brackets-byte-array-empty-encoded"));
 
@@ -176,7 +183,8 @@ public class RedirectToDefaultResourceServlet extends HttpServlet
             redirectArguments.add(Arguments.of(dirPrefix + "&lt;xml&gt;.txt", "reserved-ampersand-xml-teeth-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%26lt%3Bxml%26gt%3B.txt", "reserved-ampersand-xml-teeth-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "%2526lt%253Bxml%2526gt%253B.txt", "reserved-ampersand-xml-teeth-encoded"));
-            redirectArguments.add(Arguments.of(dirPrefix + "copyright&#00a9;2021.txt", "reserved-ampersand-entity-copyright-symbol-raw"));
+            // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Illegal character in fragment at index 65: http://127.0.1.1:46697/maniacal/uri-reserved/hash#mark/copyright&#00a9;2021.txt
+            // redirectArguments.add(Arguments.of(dirPrefix + "copyright&#00a9;2021.txt", "reserved-ampersand-entity-copyright-symbol-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "copyright%26%2300a9%3B2021.txt", "reserved-ampersand-entity-copyright-symbol-raw"));
             redirectArguments.add(Arguments.of(dirPrefix + "copyright%2526%252300a9%253B2021.txt", "reserved-ampersand-entity-copyright-symbol-encoded"));
         }
