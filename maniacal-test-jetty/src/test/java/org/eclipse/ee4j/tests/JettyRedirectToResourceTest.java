@@ -3,6 +3,9 @@ package org.eclipse.ee4j.tests;
 import java.io.File;
 import java.net.URI;
 
+import org.eclipse.jetty.http.UriCompliance;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.PathResource;
@@ -22,7 +25,10 @@ public class JettyRedirectToResourceTest extends AbstractRedirectToResourceTest
     {
         server = new Server();
 
-        ServerConnector connector = new ServerConnector(server);
+        HttpConfiguration httpConfiguration = new HttpConfiguration();
+        httpConfiguration.setUriCompliance(UriCompliance.RFC3986);
+
+        ServerConnector connector = new ServerConnector(server, new HttpConnectionFactory(httpConfiguration));
         connector.setPort(0);
         server.addConnector(connector);
 

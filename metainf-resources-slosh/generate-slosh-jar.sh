@@ -16,13 +16,13 @@ echo "this is more content in b\/bar.txt" > "b\\/bar.txt"
 echo "this is even more content in \c/zed.txt" > "\\c/zed.txt"
 
 # Encoded slosh character
-mkdir "a%2fa"
-mkdir "b%2f"
-mkdir "%2fc"
-echo "this is root%2Fthere" > "root%2Fthere.txt"
-echo "this is content in a%2fa/foo.txt" > "a%2fa/foo.txt"
-echo "this is more content in b%2f/bar.txt" > "b%2f/bar.txt"
-echo "this is even more content in %2fc/zed.txt" > "%2fc/zed.txt"
+mkdir "a%5Ca"
+mkdir "b%5C"
+mkdir "%5Cc"
+echo "this is root%5Cthere" > "root%5Cthere.txt"
+echo "this is content in a%5Ca/foo.txt" > "a%5Ca/foo.txt"
+echo "this is more content in b%5C/bar.txt" > "b%5C/bar.txt"
+echo "this is even more content in %5Cc/zed.txt" > "%5Cc/zed.txt"
 
 popd
 pushd target/slosh

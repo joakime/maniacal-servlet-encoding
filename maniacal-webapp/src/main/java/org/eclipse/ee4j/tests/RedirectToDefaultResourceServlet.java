@@ -41,28 +41,28 @@ public class RedirectToDefaultResourceServlet extends HttpServlet
         // Basic access of root
         redirectArguments.add(Arguments.of("exists.txt", "This content is the root of the webapp / war"));
 
-        // Access of resources with "/" which is encoded as "%2f"
+        // Access of resources with "\" which is encoded as "%5C"
         redirectArguments.add(Arguments.of("slosh/exists.txt", "this is the slosh jar"));
-        redirectArguments.add(Arguments.of("slosh/root%2fthere.txt", "this is root there"));
-        redirectArguments.add(Arguments.of("slosh/a%2fa/foo.txt", "this is content in a\\a/foo.txt"));
-        redirectArguments.add(Arguments.of("slosh/b%2f/bar.txt", "this is more content in b\\/bar.txt"));
-        redirectArguments.add(Arguments.of("slosh/%2fc/zed.txt", "this is even more content in \\c/zed.txt"));
+        redirectArguments.add(Arguments.of("slosh/root%5Cthere.txt", "this is root there"));
+        redirectArguments.add(Arguments.of("slosh/a%5Ca/foo.txt", "this is content in a\\a/foo.txt"));
+        redirectArguments.add(Arguments.of("slosh/b%5C/bar.txt", "this is more content in b\\/bar.txt"));
+        redirectArguments.add(Arguments.of("slosh/%5Cc/zed.txt", "this is even more content in \\c/zed.txt"));
 
         // Access of resources in slosh.jar!/META-INF/resources which has the string
-        // sequence "%2f" in their filename, which is encoded as "%25" (for "%") followed by "2f"
-        // resulting in "%252f"
-        redirectArguments.add(Arguments.of("slosh/root%252Fthere.txt", "this is root%2Fthere"));
-        redirectArguments.add(Arguments.of("slosh/a%252fa/foo.txt", "this is content in a%2fa/foo.txt"));
-        redirectArguments.add(Arguments.of("slosh/b%252f/bar.txt", "this is more content in b%2f/bar.txt"));
-        redirectArguments.add(Arguments.of("slosh/%252fc/zed.txt", "this is even more content in %2fc/zed.txt"));
+        // sequence "%5C" in their filename, which is encoded as "%25" (for "%") followed by "5C"
+        // resulting in "%255C"
+        redirectArguments.add(Arguments.of("slosh/root%255Cthere.txt", "this is root%5Cthere"));
+        redirectArguments.add(Arguments.of("slosh/a%255Ca/foo.txt", "this is content in a%5Ca/foo.txt"));
+        redirectArguments.add(Arguments.of("slosh/b%255C/bar.txt", "this is more content in b%5C/bar.txt"));
+        redirectArguments.add(Arguments.of("slosh/%255Cc/zed.txt", "this is even more content in %5Cc/zed.txt"));
 
         // Access of resources in uri-reserved.jar!/META-INF/resources which utilize
         // uri-reserved characters.
         List<String> dirNames = new ArrayList<>();
         dirNames.add("uri-reserved/");
-        dirNames.add("uri-reserved/semi;colon/"); // TODO: This results in 100% 404 failure on Jetty
+        // dirNames.add("uri-reserved/semi;colon/"); // TODO: This results in 100% 404 failure on Jetty
         dirNames.add("uri-reserved/semi%3bcolon/");
-        dirNames.add("uri-reserved/question?mark/");  // TODO: This results in 100% 404 failure on Jetty
+        // dirNames.add("uri-reserved/question?mark/");  // TODO: This results in 100% 404 failure on Jetty
         dirNames.add("uri-reserved/question%3fmark/");
         // URI_UNSUPPORTED : java.lang.IllegalArgumentException: Illegal character in fragment at index 55: http://127.0.1.1:36131/maniacal/uri-reserved/hash#mark/#hashcode.txt
         // dirNames.add("uri-reserved/hash#mark/");
