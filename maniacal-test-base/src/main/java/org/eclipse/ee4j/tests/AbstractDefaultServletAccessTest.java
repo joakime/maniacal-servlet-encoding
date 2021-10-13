@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -68,7 +70,7 @@ public abstract class AbstractDefaultServletAccessTest extends AbstractWebappTes
         {
             // Basic access
             String[] dirPrefixParts = dirPrefix.split("/");
-            cases.add(Arguments.of(dirPrefix + "exists.txt", "dir exists: " + URLDecoder.decode(dirPrefixParts[dirPrefixParts.length-1], UTF_8))); // TODO: fix path name
+            cases.add(Arguments.of(dirPrefix + "exists.txt", "dir exists: " + URLDecoder.decode(dirPrefixParts[dirPrefixParts.length - 1], UTF_8)));
 
             // Access of specific content
             cases.add(Arguments.of(dirPrefix + "this_is_100%_valid.txt", "reserved-percent-100-raw"));
@@ -186,13 +188,19 @@ public abstract class AbstractDefaultServletAccessTest extends AbstractWebappTes
     @MethodSource("metaInfResourceCases")
     public void testAccessMetaInfResourceUsingJdkHttpClient(String rawPath, String expectedContents) throws IOException, InterruptedException
     {
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpRequest.newBuilder(getWebappURI().resolve(rawPath))
-            .GET()
-            .build();
-        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        assertEquals(200, httpResponse.statusCode(), "Response status code");
-        assertThat(httpResponse.body(), containsString(expectedContents));
+        try
+        {
+            HttpClient httpClient = HttpClient.newHttpClient();
+            URI uri = getWebappURI().resolve(new URI(rawPath));
+            HttpRequest httpRequest = HttpRequest.newBuilder(uri).GET().build();
+            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            assertEquals(200, httpResponse.statusCode(), "Response status code");
+            assertThat(httpResponse.body(), containsString(expectedContents));
+        }
+        catch (URISyntaxException e)
+        {
+            Assumptions.assumeFalse(true, "URI rawPath is invalid: [" + rawPath + "]: " + e.getMessage());
+        }
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
@@ -223,7 +231,6 @@ public abstract class AbstractDefaultServletAccessTest extends AbstractWebappTes
             String response = outBuf.toString(UTF_8);
             if (LOGGER.isDebugEnabled())
                 LOGGER.debug("--Response--\n" + response);
-
 
             List<String> responseLines = response.lines()
                 .map(String::trim)
