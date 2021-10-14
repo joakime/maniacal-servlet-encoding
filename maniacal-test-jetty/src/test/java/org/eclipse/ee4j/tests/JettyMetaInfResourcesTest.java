@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JettyDefaultServletAccessTest extends AbstractMetaInfResourcesTest
+public class JettyMetaInfResourcesTest extends AbstractMetaInfResourcesTest
 {
     private static Server server;
 
