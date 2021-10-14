@@ -3,7 +3,6 @@ package org.eclipse.ee4j.tests;
 import java.io.File;
 import java.net.URI;
 
-import org.eclipse.jetty.http.UriCompliance;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
@@ -26,7 +25,7 @@ public class JettyRedirectToResourceTest extends AbstractRedirectToResourceTest
         server = new Server();
 
         HttpConfiguration httpConfiguration = new HttpConfiguration();
-        httpConfiguration.setUriCompliance(UriCompliance.RFC3986);
+        // httpConfiguration.setUriCompliance(UriCompliance.RFC3986);
 
         ServerConnector connector = new ServerConnector(server, new HttpConnectionFactory(httpConfiguration));
         connector.setPort(0);
@@ -39,6 +38,7 @@ public class JettyRedirectToResourceTest extends AbstractRedirectToResourceTest
         assertTrue(warFile.exists(), "war file should exist");
 
         WebAppContext webAppContext = new WebAppContext();
+        webAppContext.setContextPath("/maniacal");
         webAppContext.setWarResource(new PathResource(warFile.toPath()));
 
         server.setHandler(webAppContext);
