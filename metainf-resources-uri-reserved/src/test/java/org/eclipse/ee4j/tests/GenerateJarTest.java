@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -36,9 +37,10 @@ public class GenerateJarTest
             PathUtils.ensureDirExists(base);
             generateFiles(base, javaout);
             javaout.flush();
-            generateFiles(PathUtils.ensureDirExists(base.resolve("semi;colon")));
-            generateFiles(PathUtils.ensureDirExists(base.resolve("question?mark")));
-            generateFiles(PathUtils.ensureDirExists(base.resolve("hash#mark")));
+            generateFiles(base, "semi;colon");
+            generateFiles(base, "question?mark");
+            generateFiles(base, "hash#mark");
+            generateFiles(base, "%2e%2e");
         }
         catch (IOException e)
         {
@@ -46,9 +48,19 @@ public class GenerateJarTest
         }
     }
 
+    private static void generateFiles(Path base, String rawDirName) throws IOException
+    {
+        generateFiles(PathUtils.ensureDirExists(base.resolve(rawDirName)));
+        String encodedDirName = URLEncoder.encode(rawDirName, StandardCharsets.UTF_8);
+        if (!rawDirName.equals(encodedDirName))
+        {
+            generateFiles(PathUtils.ensureDirExists(base.resolve(encodedDirName)));
+        }
+    }
+
     private static void generateFiles(Path outputDir)
     {
-        generateFiles(outputDir, null);
+        generateFiles(outputDir, (PrintStream)null);
     }
 
     private static void generateFiles(Path outputDir, PrintStream testcases)

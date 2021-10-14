@@ -29,9 +29,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class AbstractDefaultServletAccessTest extends AbstractWebappTest
+public abstract class AbstractMetaInfResourcesTest extends AbstractWebappTest
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDefaultServletAccessTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMetaInfResourcesTest.class);
 
     public static Stream<Arguments> metaInfResourceCases()
     {
