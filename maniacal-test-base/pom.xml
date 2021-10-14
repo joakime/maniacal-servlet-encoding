@@ -27,6 +27,13 @@
       <type>pom</type>
     </dependency>
     <dependency>
+      <groupId>org.eclipse.ee4j.tests</groupId>
+      <artifactId>metainf-resources-encoding</artifactId>
+      <version>${project.version}</version>
+      <classifier>resources</classifier>
+      <type>jar</type>
+    </dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>compile</scope>

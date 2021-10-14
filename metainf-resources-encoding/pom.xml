@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>metainf-resources-uri-reserved</artifactId>
+  <artifactId>metainf-resources-encoding</artifactId>
   <packaging>jar</packaging>
 
   <properties>
@@ -33,7 +33,7 @@
         <version>3.2.0</version>
         <executions>
           <execution>
-            <id>attach-slosh-jar</id>
+            <id>attach-metainf-resources-encoding-jar</id>
             <phase>prepare-package</phase>
             <goals>
               <goal>attach-artifact</goal>
@@ -41,7 +41,7 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>target/uriReservedChars.jar</file>
+                  <file>target/metainf-resources-encoding.jar</file>
                   <type>jar</type>
                   <classifier>resources</classifier>
                 </artifact>

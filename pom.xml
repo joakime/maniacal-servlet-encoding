@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>metainf-resources-uri-reserved</module>
+    <module>metainf-resources-encoding</module>
     <module>metainf-resources-slosh</module>
     <module>maniacal-webapp</module>
     <module>maniacal-test-base</module>
